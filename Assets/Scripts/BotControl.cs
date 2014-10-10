@@ -36,7 +36,6 @@ public class BotControl : MonoBehaviour {
 			if (Physics.Raycast(testRay, out hitInfo))
 			{
 				destination = hitInfo.point;
-			
 				currentCommand = Command.move;
 
 			}
@@ -51,7 +50,7 @@ public class BotControl : MonoBehaviour {
 
 			if(Vector3.Distance(transform.position, destination) <=  0.5f)
 			{
-				rigidbody.velocity = new Vector3(0,0,0);
+				rigidbody.velocity = Vector3.zero;
 				currentCommand = Command.none;
 			}
 
