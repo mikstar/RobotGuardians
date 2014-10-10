@@ -35,30 +35,38 @@ public class BotControl : MonoBehaviour {
 
 			if (Physics.Raycast(testRay, out hitInfo))
 			{
-				destination = hitInfo.point;
-				currentCommand = Command.move;
+				if(hitInfo.collider.name == "Enemy")
+				{
+					destination = hitInfo.collider.transform.position;
+					currentCommand = Command.attack;
+				}
 
+				else
+				{
+					destination = hitInfo.point;
+					currentCommand = Command.move;
+				}
 			}
 		}
 
 		if(currentCommand == Command.move)
 		{
-		//	rigidbody.velocity = Vector3.zero;
-			Vector3 tempAngles = new Vector3(0,Mathf.Rad2Deg * Mathf.Atan2((destination.x - transform.position.x) , (destination.z - transform.position.z)),0);
-			transform.eulerAngles = tempAngles;
-			rigidbody.AddRelativeForce(Vector3.forward * 500);
-
-			if(Vector3.Distance(transform.position, destination) <=  0.5f)
-			{
-				rigidbody.velocity = Vector3.zero;
-				currentCommand = Command.none;
-			}
-
+			MoveTo(destination);
 		}
 
 		if(currentCommand == Command.attack)
 		{
-			
+			if(Vector3.Distance(transform.position, destination) <=  3.0f)
+			{
+				Vector3 tempAngles = new Vector3(0,Mathf.Rad2Deg * Mathf.Atan2((destination.x - transform.position.x) , (destination.z - transform.position.z)),0);
+				transform.eulerAngles = tempAngles;
+				Debug.Log("Attacking enemy");
+			}
+
+			else
+			{
+				MoveTo(destination);
+			}
 
 		}
 
@@ -70,10 +78,22 @@ public class BotControl : MonoBehaviour {
 		if(currentCommand == Command.none)
 		{
 			
-			Debug.Log("Nothing is habbening");
+
 		}
+	}
 
-
+	void MoveTo(Vector3 target)
+	{
+		rigidbody.velocity = Vector3.zero;
+		Vector3 tempAngles = new Vector3(0,Mathf.Rad2Deg * Mathf.Atan2((destination.x - transform.position.x) , (destination.z - transform.position.z)),0);
+		transform.eulerAngles = tempAngles;
+		rigidbody.AddRelativeForce(Vector3.forward * 100 * speed);
+		
+		if(Vector3.Distance(transform.position, target) <=  1.0f)
+		{
+			rigidbody.velocity = Vector3.zero;
+			currentCommand = Command.none;
+		}
 	}
 //		if(Input.touchCount > 0)
 //		{
