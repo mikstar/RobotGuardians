@@ -39,4 +39,13 @@ public class CreateScriptableObj : MonoBehaviour {
 		AssetDatabase.SaveAssets();
 	}
 
+	[MenuItem("Assets/Create/Roboblueprint")]
+	public static void createRoboBlueprint()
+	{
+		RoboBlueprint asset = ScriptableObject.CreateInstance<RoboBlueprint>();
+		
+		AssetDatabase.CreateAsset(asset,AssetDatabase.GetAssetPath(Selection.activeObject) + "/NewRoboblueprint.asset");
+		AssetDatabase.SaveAssets();
+	}
+
 }

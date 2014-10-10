@@ -4,7 +4,8 @@ using System.Collections;
 [System.Serializable]
 public class RoboBlueprint : ScriptableObject {
 
-	public int armour;
-	public float speed;
-	public string activeAbility;
+	public RobopartHead head;
+	public RobopartBody body;
+	public RobopartLegs legs;
+	public RobopartArm arms;
 }
